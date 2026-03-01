@@ -1,43 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.1px; text-indent: -0.1px; font: 12.0px Helvetica}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuronox AI — Wallet-Gated AI Chat</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1">&lt;title&gt;Neuronox AI&lt;/title&gt;</p>
-<p class="p1">&lt;link rel="stylesheet" href="style.css"&gt;</p>
-<p class="p1">&lt;!-- Solana wallet adapter scripts --&gt;</p>
-<p class="p1">&lt;script src="https://unpkg.com/@solana/wallet-adapter-wallets@0.18.0-beta.7/lib/index.umd.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;h1&gt;Neuronox AI — Chat with your crypto AI&lt;/h1&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;button id="connectWalletBtn"&gt;Connect Wallet&lt;/button&gt;</p>
-<p class="p1">&lt;p id="walletStatus"&gt;Not connected&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;input type="text" id="chatInput" placeholder="Type your message here"&gt;</p>
-<p class="p3">&lt;button id="sendBtn" disabled&gt;Send&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;p id="chatOutput"&gt;AI responses appear here&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script src="script.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <div class="container">
+
+    <!-- Header / Branding -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">◆</span>
+        <span class="logo-text">Neuronox AI</span>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="hero-heading">Neuronox AI — Wallet-Gated AI Chat</h1>
+      <p class="hero-description">Connect your Solana wallet below to unlock AI access</p>
+
+      <button id="connectWalletBtn" class="btn btn-primary">
+        <span class="btn-icon">⬡</span>
+        Connect Wallet
+      </button>
+      <p class="helper-text">Click 'Connect Wallet' to link your Phantom or compatible Solana wallet.</p>
+    </section>
+
+    <!-- Wallet Status -->
+    <section class="wallet-status-section">
+      <div class="wallet-status-card">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <span id="walletStatus" class="wallet-status-text">Wallet not connected</span>
+      </div>
+      <p id="tokenStatus" class="token-status hidden"></p>
+    </section>
+
+    <!-- Chat Interface -->
+    <section class="chat-section">
+      <div class="chat-container">
+        <div class="chat-header">
+          <span class="chat-header-icon">✦</span>
+          <span>Neuronox AI Chat</span>
+          <span class="chat-badge" id="chatBadge">Locked</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-welcome">
+            <div class="chat-welcome-icon">◇</div>
+            <p>Connect your wallet and hold 10 Neuronox tokens to start chatting with AI.</p>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-lock-overlay" id="chatLockOverlay">
+            <span class="lock-icon">🔒</span>
+            <span id="lockMessage">Hold 10 Neuronox tokens to unlock AI access</span>
+          </div>
+          <div class="chat-input-wrapper">
+            <input
+              type="text"
+              id="chatInput"
+              class="chat-input"
+              placeholder="Type your message..."
+              disabled
+            >
+            <button id="sendBtn" class="btn btn-send" disabled>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Powered by Neuronox AI &middot; Built on Solana</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
